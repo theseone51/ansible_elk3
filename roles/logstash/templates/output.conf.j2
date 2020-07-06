@@ -1,0 +1,7 @@
+output {
+        elasticsearch {
+            hosts    => "{{ ansible_default_ipv4.address }}:9200"
+            index    => "nginx-%{+YYYY.MM.dd}"
+        }
+	#stdout { codec => rubydebug }
+}

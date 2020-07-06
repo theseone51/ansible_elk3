@@ -1,0 +1,9 @@
+---
+  - hosts: elk-nodes
+    roles:
+      - dependencies
+      - elasticsearch
+      - logstash
+  - hosts: elk-node1
+    roles:
+      - kibana

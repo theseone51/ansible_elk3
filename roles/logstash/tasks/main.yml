@@ -1,0 +1,26 @@
+---
+  - name: Req JAVA
+    apt:
+      name: default-jre
+      state: present
+
+  - name: Download and install logstash
+    apt:
+      deb: https://artifacts.elastic.co/downloads/logstash/logstash-7.6.0.deb
+
+  - name: Configure logstash
+    template:
+      src: "{{ item }}"
+      dest: /etc/logstash/conf.d/
+    with_items:
+      - "input.conf.j2"
+      - "output.conf.j2"
+      - "filter.conf.j2"
+    notify:
+      - Logstash restart
+
+  - name: Make logstash service started and enabled
+    systemd:
+      name: logstash
+      state: started
+      enabled: yes

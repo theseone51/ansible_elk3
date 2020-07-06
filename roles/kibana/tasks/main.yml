@@ -1,0 +1,17 @@
+---
+  - name: Download and install Kibana
+    apt:
+      deb: https://artifacts.elastic.co/downloads/kibana/kibana-7.6.0-amd64.deb
+      state: present
+
+  - name: Configure Kibana to listen on own ip-address
+    template:
+      src: kibana.j2
+      dest: /etc/kibana/kibana.yml
+    notify: Kibana restart
+
+  - name: Start Kibana and make it enabled
+    systemd:
+      name: kibana.service
+      enabled: yes
+      state: started

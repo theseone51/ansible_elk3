@@ -1,0 +1,8 @@
+---
+  - name: Install JAVA11, apt-transport-https (required for logstash)
+    apt:
+      name: [default-jre, apt-transport-https]
+      state: present
+      update_cache: yes
+  - name: Copy host file to nodes
+    template: src=hosts.j2 dest=/etc/hosts

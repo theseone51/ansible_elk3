@@ -1,0 +1,14 @@
+---
+  - name: Download and Install logstash
+    apt:
+      deb: https://artifacts.elastic.co/downloads/logstash/logstash-7.6.0.deb
+
+  - name: Configure logstash
+    template:
+      src: "{{ item }}"
+      dest: /etc/logstash/conf.d/
+    with_fileglob: ./*.conf.j2
+#    notify: Restart logstash
+
+  - name: Start logstash service and make it enabled
+    systemd: name=logstash state=started enabled=yes
